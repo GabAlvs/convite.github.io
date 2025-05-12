@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite Especial</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('./Assets/bg.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        
+        .convite-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .convite-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .contador {
+            font-size: 22px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        
+        .tempo {
+            display: inline-block;
+            min-width: 60px;
+            padding: 0 5px;
+        }
+        
+        .tempo span {
+            display: block;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="convite-container">
+        <img src="./Assets/Convite.png" alt="Convite" class="convite-img">
+        
+        <div class="contador">
+            <h1>Contagem regressiva</h1>
+            <div id="contador">
+                <!-- O contador será inserido aqui pelo JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data alvo: 04 de junho
+        const dataAlvo = new Date('2025-06-04T00:00:00');
+        
+        function atualizarContador() {
+            const agora = new Date();
+            const diferenca = dataAlvo - agora;
+            
+            // Cálculos do tempo
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+            
+            // Formatação do contador
+            document.getElementById('contador').innerHTML = `
+                <div class="tempo">
+                    ${dias}<span>dias</span>
+                </div>
+                <div class="tempo">
+                    ${horas}<span>horas</span>
+                </div>
+                <div class="tempo">
+                    ${minutos}<span>minutos</span>
+                </div>
+                <div class="tempo">
+                    ${segundos}<span>segundos</span>
+                </div>
+            `;
+            
+            // Mensagem especial quando chegar a data
+            if (diferenca < 0) {
+                document.getElementById('contador').innerHTML = `
+                    <div style="font-size: 24px;">
+                        Hoje é o nosso dia especial! ❤️
+                    </div>
+                `;
+                clearInterval(intervalo);
+            }
+        }
+        
+        // Atualiza imediatamente e depois a cada segundo
+        atualizarContador();
+        const intervalo = setInterval(atualizarContador, 1000);
+    </script>
+</body>
+</html>
